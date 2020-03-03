@@ -12,6 +12,13 @@
 % This work has the LPPL maintenance status `maintained'.
 % 
 % The Current Maintainer of this work is J. Korbmacher (j.korbmacher@uu.nl).
+%
+% DISCLAIMER
+%
+% The UU-house style is protected by copyright, with Utrecht
+% University having the right of use. This is why the house style and
+% the content of this website cannot be used and/or applied by third
+% parties without permission granted in advance.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{uureport}[2020/02/25 v0.1.0]
 \newif\if@dutch
@@ -20,45 +27,15 @@
 \newif\if@merriweather
 \newcommand{\@versionlabel}{}
 \newcommand{\@contentslabel}{}
-\newcommand{\@emaillabel}{}
-\newcommand{\@websitelabel}{}
-\newcommand{\@datelabel}{}
-\newcommand{\@rightfooterlabel}[2]{}
-\newcommand{\@officelabel}{}
-\newcommand{\@hourslabel}{}
-\newcommand{\@blocklabel}{}
-\newcommand{\@weeklabel}{}
-\newcommand{\@schedulelabel}{}
-\newcommand{\@lecturerlabel}{}
 %chaptername
 \DeclareOption{english}{%
   \@dutchfalse
   \renewcommand{\@versionlabel}{Version}
-  \renewcommand{\@contentslabel}{Table of Contents}
-  \renewcommand{\@rightfooterlabel}[2]{Page {#1} of {#2}}
-  \renewcommand{\@lecturerlabel}{Lecturer}
-  \renewcommand{\@blocklabel}{Block}
-  \renewcommand{\@emaillabel}{E-mail}
-  \renewcommand{\@websitelabel}{Website}
-  \renewcommand{\@datelabel}{Date}
-  \renewcommand{\@officelabel}{Office}
-  \renewcommand{\@hourslabel}{Office Hours}
-  \renewcommand{\@weeklabel}{Week}
-  \renewcommand{\@schedulelabel}{Schedule}}
+  \renewcommand{\@contentslabel}{Table of Contents}}
 \DeclareOption{dutch}{%
   \@dutchtrue
   \renewcommand{\@versionlabel}{Versie}
-  \renewcommand{\@contentslabel}{Inhoudsopgave}
-  \renewcommand{\@rightfooterlabel}[2]{Pagina {#1} van {#2}}
-  \renewcommand{\@lecturerlabel}{Docent}
-  \renewcommand{\@blocklabel}{Blok}
-  \renewcommand{\@emaillabel}{E-mail}
-  \renewcommand{\@websitelabel}{Website}
-  \renewcommand{\@datelabel}{Datum}
-  \renewcommand{\@officelabel}{Kantoor}
-  \renewcommand{\@hourslabel}{Spreekuur}
-  \renewcommand{\@weeklabel}{Week}
-  \renewcommand{\@schedulelabel}{Programma}}
+  \renewcommand{\@contentslabel}{Inhoudsopgave}}
 \DeclareOption{verdana}{\@verdanatrue}
 \DeclareOption{opensans}{\@opensanstrue}
 \DeclareOption{merriweather}{\@merriweathertrue}
@@ -170,7 +147,8 @@
 %%% Spacing
 \setlength{\lineskip}{1\p@}
 \setlength{\normallineskip}{1\p@}
-%%% This is a manual parskip package. Maybe it's better to use the package.
+%%% This is a manual parskip package. Maybe it's better to use the
+%%% real thing?.
 \setlength{\parskip}{\@leading}
 \setlength{\parindent}{\z@}
 \renewcommand{\baselinestretch}{}
@@ -499,6 +477,12 @@
   \@versionlabel~\@version
   \fi}
 %%%% Additional user commands
+\newcommand{\uupicture}[2][]{
+  \begin{figure}[h]
+    \includegraphics{#2}\newline
+    {\scriptsize\itshape #1}
+  \end{figure}
+  }
 \newcommand{\sender}[2][]{%
   \def\@sender{#2}
   \def\@subsender{#1}}
