@@ -185,14 +185,14 @@
 \def\ps@uureport@running{%
   \def\@oddfoot{%
     \rule{0.5\linewidth}{0pt}\parbox[b]{0.5\linewidth}{%
-      \thepage\hfill\@date\quad\@versionlabel~\@version}}
+      \thepage\hfill\@date\quad\@print@version}}
   \def\@oddhead{%
     \raisebox{0.5\headheight}{\parbox{\linewidth}{%
         \small\@title\hfill Utrecht University, \@subsender}}}
   \if@twoside
     \def\@evenfoot{%
       \parbox[b]{0.5\linewidth}{%
-        \@date\quad\@versionlabel~\@version}\hfill\thepage\rule{0.5\linewidth}{0pt}}
+        \@date\quad\@print@version}\hfill\thepage\rule{0.5\linewidth}{0pt}}
     \def\@evenhead{%
       \raisebox{0.5\headheight}{\parbox{\linewidth}{%
           \small Utrecht University, \@subsender\hfill\@title}}}
@@ -237,8 +237,7 @@
   \global\let\title\relax
   \global\let\author\relax
   \global\let\date\relax
-  \global\let\and\relax
-}
+  \global\let\and\relax}
 \else
 \renewcommand\maketitle{\par
   \begingroup
@@ -354,8 +353,9 @@
   \ifnum \c@secnumdepth >\m@ne
   \refstepcounter{chapter}%
   \typeout{\@chapapp\space\thechapter.}%
+  \addcontentsline{toc}{part}{\@chapapp\space \thechapter}
   \addcontentsline{toc}{chapter}%
-  {\protect\numberline{\thechapter}#1}%
+  {#1}%
   \else
   \addcontentsline{toc}{chapter}{#1}%
   \fi
@@ -385,7 +385,7 @@
     \vskip \@leading
   }}
 \renewcommand\section{\@startsection {section}{1}{\z@}%
-  {-1em  \@plus -0.5em \@minus -0.5em}%
+  {-2em  \@plus -0.5em \@minus -0.5em}%
   {1pt}%
   {\normalfont\bfseries}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
@@ -405,6 +405,8 @@
   {-1em}%
   {\normalfont\normalsize}}
 %%%%% TOC
+\renewcommand{\@dotsep}{1000} %No points on the "dotted" line
+\setcounter{tocdepth}{3}
 \renewcommand\tableofcontents{%
   \if@titlepage
     \if@openright
@@ -415,23 +417,53 @@
   \else
     \relax  
   \fi
-  {\large \@contentslabel}
+  {\Large \@contentslabel}
   
   \parskip\z@
 
   \@starttoc{toc}%
 }
-
-\renewcommand{\@dotsep}{1000} %No points on the "dotted" line
-\setcounter{tocdepth}{3}
-
+\renewcommand*\l@part[2]{%
+  \ifnum \c@tocdepth >-2\relax
+    \addpenalty{-\@highpenalty}%
+    \addvspace{2.25em \@plus\p@}%
+    \setlength\@tempdima{3em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      {\leavevmode
+       \large \bfseries #1\hfil \hb@xt@\@pnumwidth{\hss #2}}\par
+       \nobreak
+         \global\@nobreaktrue
+         \everypar{\global\@nobreakfalse\everypar{}}%
+    \endgroup
+  \fi}
+\renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \setlength\@tempdima{1.5em}%
+    \vskip 0.5\@leading
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \large%\bfseries
+      \advance\leftskip\@tempdima
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+    \fi}
+\renewcommand*\l@section{\@dottedtocline{1}{2.5em}{4em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{3.5em}{5.5em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{4.5em}{7em}}
+\renewcommand*\l@paragraph{\@dottedtocline{4}{5.5em}{8.5em}}
+\renewcommand*\l@subparagraph{\@dottedtocline{5}{6.5em}{10em}}
 %%% Custom routines at begin and end
 \AtBeginDocument{%
   \def\today{\number\day-\number\month-\number\year}
   \frenchspacing}
 \AtEndDocument{%
   \immediate\label{@lastpage}}
-%%%%% My print commands
+%%%%% @print commands
 \newcommand{\@print@logo}{%
   \begin{minipage}[b][\@logoheight][t]{\@logowidth}
   \if@dutch
@@ -446,7 +478,6 @@
       it somewhere where LaTeX can find it.}}
   \fi
 \end{minipage}}
-
 \newcommand{\@print@title}{%
   \@tempdima\linewidth%
   \addtolength{\@tempdima}{1in}%
@@ -461,9 +492,13 @@
     \@titlepageinfo
     \end{flushright}
   \end{minipage}}
-
+\newcommand{\@print@version}{%
+  \if &\@version&
+  \relax
+  \else
+  \@versionlabel~\@version
+  \fi}
 %%%% Additional user commands
-
 \newcommand{\sender}[2][]{%
   \def\@sender{#2}
   \def\@subsender{#1}}
@@ -471,20 +506,6 @@
   \def\@titlepageinfo{#1}}
 \newcommand{\version}[1]{%
   \def\@version{#1}}
-\sender{}
+\sender[]{}
 \titlepageinfo{}
 \version{}
-
-%%%% Environments
-
-% \renewenvironment{titlepage}
-%     {%
-%       \newpage
-%       \thispagestyle{uureport@title}%
-%       \setcounter{page}\@ne
-%     }%
-%     {\newpage
-%      \if@twoside\else
-%         \setcounter{page}\@ne
-%      \fi
-%    }
