@@ -20,7 +20,7 @@
 % the content of this website cannot be used and/or applied by third
 % parties without permission granted in advance.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{uureport}[2020/02/25 v0.1.0]
+\ProvidesClass{uureport}[2020/03/03 v0.1.0]
 \newif\if@dutch
 \newif\if@verdana
 \newif\if@opensans
@@ -36,7 +36,7 @@
   \@dutchtrue
   \renewcommand{\@versionlabel}{Versie}
   \renewcommand{\@contentslabel}{Inhoudsopgave}}
-\DeclareOption{verdana}{\@verdanatrue}
+\DeclareOption{verdana}{\@Verdanatrue}
 \DeclareOption{opensans}{\@opensanstrue}
 \DeclareOption{merriweather}{\@merriweathertrue}
 %%%%% Enable options of report.cls by passing them to the
@@ -100,14 +100,13 @@
 \else
    \RequirePackage[english]{babel}
 \fi
-%%%%% Redo Layout. Ignore compatability and two-columdn. Todo: better twopage
+%%%%% Redo Layout. Ignore compatability and two-columdn.
 \newlength {\@leading}
 \setlength {\@leading}    {\baselineskip} %just renames baselineskip
 \newlength {\@logowidth}
 \setlength {\@logowidth}  {11.41cm}
 \newlength {\@logoheight}
 \setlength {\@logoheight} {4.5cm}
-%%% TODO: Adjust \@logowidth for other sizes
 % Header
 \setlength   {\voffset}    {-1in}
 \addtolength {\voffset}    {1cm}
