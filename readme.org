@@ -1,4 +1,4 @@
-#+TITLE:        =uureport.cls= v.0.1.0 Readme
+#+TITLE:        =uureport.cls=
 #+AUTHOR:      J. Korbmacher
 #+DATE:        <2020-03-03 Tue>
 #+EMAIL:       j.korbmacher@uu.nk
@@ -86,17 +86,15 @@ page. The subsender is used for the running heads.
 If provided is printed in the running footer.
 
 * Projects
++ TODO Implement a decent two-page option
 
-** TODO Implement a decent two-page option
-
-** TODO Implement two column
++ TODO Implement two column
 
 Discussion: Maybe, maybe not.
 
-** TODO Implement different paper sizes
++ TODO Implement different paper sizes
 
 Note: requires logo adjustment.
 
 * Version History
-
-+ 0.1.0 Beta-release
+- 0.1.0 \Alpha-release
