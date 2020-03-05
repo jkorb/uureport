@@ -201,7 +201,7 @@
   {\Large \@subtitle\par}%
   {\large
     \lineskip .75em%
-    \begin{tabular}[t]{l}%
+    \begin{tabular}[t]{@{} l}%
       \@author
     \end{tabular}\par}%
   \end{minipage}  
