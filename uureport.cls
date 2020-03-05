@@ -193,15 +193,15 @@
   \let \footnote \thanks
   \null\vfil
   \@tempdima\textwidth%
-  \addtolength{\@tempdima}{-6cm}%
-  \rule{6cm}{\z@}%
+  \addtolength{\@tempdima}{-4cm}%
+  \rule{4cm}{\z@}%
   \begin{minipage}{\@tempdima}
   \raggedright  
   {\LARGE \@title \par}%
   {\Large \@subtitle\par}%
   {\large
     \lineskip .75em%
-    \begin{tabular}[t]{@{} c }%
+    \begin{tabular}[t]{l}%
       \@author
     \end{tabular}\par}%
   \end{minipage}  
