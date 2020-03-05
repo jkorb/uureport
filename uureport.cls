@@ -423,7 +423,7 @@
     \begingroup
       \parindent \z@ \rightskip \@pnumwidth
       \parfillskip -\@pnumwidth
-      \leavevmode \large%\bfseries
+      \leavevmode \large
       \advance\leftskip\@tempdima
       #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
       \penalty\@highpenalty
@@ -465,10 +465,22 @@
     \vspace{\@tempdimb}
     \begin{flushright}
     \raggedleft
-    \@sender\\
-    \@titlepageinfo
+    \@print@sender
+    \@print@titlepageinfo
     \end{flushright}
   \end{minipage}}
+\newcommand{\@print@sender}{%
+  \if &\@sender&
+    \relax
+  \else
+    \@sender\\
+  \fi}
+\newcommand{\@print@titlepageinfo}{%
+  \if &\@titlepageinfo&
+    \relax
+  \else
+  \@titlepageinfo
+  \fi}
 \newcommand{\@print@version}{%
   \if &\@version&
   \relax
@@ -492,3 +504,4 @@
 \sender[]{}
 \titlepageinfo{}
 \version{}
+\title[]{}
