@@ -1,0 +1,100 @@
+#+TITLE:        =uureport.cls=
+#+AUTHOR:      J. Korbmacher
+#+DATE:        <2020-03-03 Tue>
+#+EMAIL:       j.korbmacher@uu.nk
+#+LANGUAGE:    en
+
+* About
+
+This class ports the Word template for the UU house style
+(https://www.uu.nl/en/organisation/corporate-identity/downloads/word-document)
+to a \LaTeX~class. The class is built on the standard report class and
+has (almost) all the functionality of that class. Additional
+options/commands are explained below.
+
+* Installation and Dependencies
+
+The simplest way to use the class is to include the actual style file
+(=uureport.cls=) and the logos (with their original file names,
+#+BEGIN_CENTER
+=UU_logo_EN_CMYK.png= 
+and
+ =UU_logo_NL_CMYK.png=,
+#+END_CENTER
+available under
+https://www.uu.nl/en/organisation/corporate-identity/downloads/logo,
+heading "LOGOS FOR DIGITAL APPLICATIONS") in whatever directory you want to compile your letter.
+
+If you like the class and want to make it available for every \LaTeX
+file you compile on your computer, you need to put the files somewhere
+in the TDS (TeX Directory Structure). For Mac, I recommend:
+
++ Put =uureport.cls= in
+#+BEGIN_CENTER
+  =Users/<username>/Library/texmf/tex/latex/uureport=
+#+END_CENTER 
+  If that directory doesn't exist, it's safe to create it.
++ Put the logo files (with their original file names,
+  =UU_logo_EN_CMYK.png= and =UU_logo_NL_CMYK.png=) in
+#+BEGIN_CENTER
+  =Users/username/Library/texmf/tex/latex/uureport/logos/=
+#+END_CENTER
+ Again, safe to create.
+
+Note that =Users/<username>/Library/= is by default a hidden folder in
+MacOS. You can use Command+Shift+Dot in the folder =Users/<username>/=
+to make it visible. Otherwise, use the internet to figure it out.
+
+For other Unix systems (e.g. Linux) or Windows you're on your own (for
+now). 
+
+The class loads the following packages:
++ =babel= with the provided langauge option (see below, default: english)
++ =graphicx= with no options (to include the logo and signature)
+
+This means that you don't need to load these packages anymore, unless
+you want to change their options. You're free to load other packages,
+but I haven't explored any possible compatability issues. Since the
+class was written from scratch I /hope/ there are none, but that might
+be folly.
+
+* Options
+
+The package has all options of the report class, *except for*
+=twocolumn= and other paper sizes than a4. 
+
+Additionally, the package has two language options =dutch= and
+=english= (the letter is loaded by default).
+
+Finally, there are three font options =verdana=, =opensans=, and
+=merriweather= (see:
+https://www.uu.nl/en/organisation/corporate-identity/brand-policy/fonts). The
+=verdana= option requires compilation with XeLaTeX, =opensans= is
+loaded by default.
+
+*  Commands
+
+The class modifies the =\title= command to allow for a subtitle to be
+passed as an optional argument: =\title[subtitle]{Titel rapport}=
+
+Additionally, the class has the follwoing three new commmands:
++ =\sender[<subsender>]{<sender>}=
++ =\titlepageinfo{<textblock>}=
+The previous two commands together create the textblock on the title
+page. The subsender is used for the running heads.
++ =\version{<version>}=
+If provided is printed in the running footer.
+
+* Projects
++ TODO Implement a decent two-page option
+
++ TODO Implement two column
+
+Discussion: Maybe, maybe not.
+
++ TODO Implement different paper sizes
+
+Note: requires logo adjustment.
+
+* Version History
+- 0.1.0 \Alpha-release
